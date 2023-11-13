@@ -52,9 +52,7 @@ public class MemberService {
         List<MemberDTO> memberDTOList = new ArrayList<>();
         for(MemberEntity memberEntity : memberEntityList){
             memberDTOList.add(MemberDTO.toMemberDTO(memberEntity));
-
 //            같은 의미
-
 //            MemberDTO memberDTO = MemberDTO.toMemberDTO(memberEntity);
 //            memberDTOList.add(memberDTO);
         }
@@ -94,5 +92,17 @@ public class MemberService {
 
     public void deleteById(Long id) {
         memberRepository.deleteById(id);
+    }
+
+    public String emailCheck(String memberEmail) {
+        Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberEmail);
+        if(byMemberEmail.isPresent()){ // isEmpty()를 써도됨
+            // 조회결과가 있다면 -> 사용불가능 (중복이다)
+            return "no";
+        } else {
+            // 조회결과가 없다면 -> 사용가능 (중복아님)
+            return "ok";
+
+        }
     }
 }
