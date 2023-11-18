@@ -12,6 +12,8 @@
     <br>
     <button onclick="saveReq()">글작성</button>
     <button onclick="listReq()">글목록</button>
+    <button onclick="pagingReq()">페이징목록</button>
+
 </body>
 <script>
     const saveReq = () => {
@@ -19,6 +21,9 @@
     }
     const listReq = () => {
         location.href = "/board/board_list";
+    }
+    const pagingReq = () => {
+        location.href = "/board/paging";
     }
 </script>
 
