@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>board_detail</title>
+    <!--  jquery cdn  있어야만 j쿼리 사용가능 -->
+    <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous">
+    </script>
 </head>
 <body>
 <table>
@@ -41,8 +47,47 @@
 <button onclick="updateReq()">수정</button>
 <button onclick="deleteReq()">삭제</button>
 
+<!-- 댓글 작성 부분 -->
+<div id="comment-write">
+    <input type="text" id="commentWriter" placeholder="작성자">
+    <input type="text" id="commentContents" placeholder="내용">
+    <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
+</div>
+
+<!-- 댓글 출력 부분 -->
+<div id="comment-list">
+
+
+</div>
 </body>
 <script th:inline="javascript">
+    const commentWrite = () => {
+        const writer = document.getElementById("commentWriter").value; // 작성자
+        const contents = document.getElementById("commentContents").value; // 작성내용
+        const id = [[${board.id}]]; // 게시글 번호
+        console.log("작성자 : ", writer);
+        console.log("내용 : ", contents);
+        console.log("게시글번호 : ", id);
+        $.ajax({
+            // 요청방식 : post
+            // 요청주소 : /comment/board_save
+            // 요청 데이터  : 작성자, 작성내용, 게시글번호
+            type : "post",
+            url : "/comment/board_save",
+            data : {
+                "commentWriter" : writer,
+                "commentContents" : contents,
+                "boardId" : id
+            },
+            success: function (res){
+                console.log("성공", res);
+            },
+            error: function (err){
+                console.log("실패", err);
+            }
+        });
+    }
+
     const listReq = () => {
         console.log("목록 요청");
         const page = [[${page}]];
