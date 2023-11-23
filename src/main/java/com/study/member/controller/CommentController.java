@@ -25,6 +25,7 @@ public class CommentController {
         if( saveResult != null){
             // 작성 성공하면 댓글 목록을 가져와서 리턴
             // 댓글 목록 : 해당 게시글의 댓글 전체
+            // 저장 준비
             List<CommentDTO> commentDTOList = commentService.findAll(commentDTO.getBoardId());
 
         } else{
